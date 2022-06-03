@@ -22,7 +22,7 @@ if (pop != null) {
     toastr['success'](message);
 }
 if (pop_error != null) {
-    var message = pop.getAttribute('data-message');
+    var message = pop_error.getAttribute('data-message');
     toastr['error'](message);
 }
 

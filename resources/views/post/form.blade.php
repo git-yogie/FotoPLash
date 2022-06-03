@@ -10,14 +10,19 @@
             <div class="col-md-4 p-2">
                     <img src="{{ isset($foto) ? Storage::url('public/assets/image/'.$foto->foto) : '' }}" id="show_image" alt="" srcset="">
               </div>
-              <div class="col-md-8">    
+              <div class="col-md-8">
                 <div class="card-body">
                     <form class="row" action="{{ isset($foto) ? route('fotoUpdate',$foto->id) :route('fotoStore') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="col-md-12">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" value="{{ isset($foto) ? $foto->judul : '' }}" name="judul">
+                                <input type="text" class="form-control @error('foto') is-invalid
+
+                                @enderror" value="{{ isset($foto) ? $foto->judul : '' }}" name="judul">
                                 <label for="floatingInput">Judul</label>
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('foto') }}
+                                </div>
                               </div>
                         </div>
                         <div class="col-md-12 mt-2">
@@ -28,7 +33,12 @@
                         </div>
                         <div class="col-md-12">
                             <label for="formFileMultiple" class="form-label">Foto</label>
-                            <input class="form-control"  name="foto" type="file" id="foto">
+                            <input class="form-control @error('foto') is-invalid
+
+                            @enderror"  name="foto" type="file" id="foto">
+                            <div class="invalid-feedback">
+                                {{ $errors->first('foto') }}
+                            </div>
                         </div>
 
                         <div class="col-12 mt-3">

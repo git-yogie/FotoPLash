@@ -45,6 +45,18 @@ class FotoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(
+            [
+                'judul' => 'required',
+                'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            ],
+            ['judul.required' => 'Judul tidak boleh kosong.',
+            'foto.required' => 'Foto tidak boleh kosong.',
+            'foto.image' => 'Foto harus berupa gambar.',
+            'foto.mimes' => 'Extensi yang diterima jpeg, png, dan jpg.',
+            'foto.max' => 'Foto tidak boleh lebih dari 2MB.',
+            ]
+        );
         $fotoName = Str::random(20) . '.' . $request->file('foto')->getClientOriginalExtension();
         $data = [
             'judul' => $request->judul,
@@ -80,9 +92,9 @@ class FotoController extends Controller
     public function show(Foto $foto, $id)
     {
         $foto = Foto::find($id);
-        if(isset(Auth::user()->id)){
+        if (isset(Auth::user()->id)) {
             $title = Auth::user()->id == $foto->user_id ? 'postingan' : 'home';
-        }else{
+        } else {
             $title = 'home';
         }
         $data = [
@@ -149,13 +161,13 @@ class FotoController extends Controller
                     $data['ukuran'] = filesize(Storage::path('public/assets/image/' . $fotoName));
                     if (Storage::exists('public/assets/image/' . $fotoName)) {
                         $db = $foto->update($data);
-                        return redirect()->route('postingan')->with('success', 'Foto'. $request->judul .' berhasil di Upload');
+                        return redirect()->route('postingan')->with('success', 'Foto' . $request->judul . ' berhasil di Upload');
                     }
                 }
             }
-        }else{
+        } else {
             $foto->update($request->all());
-            return redirect()->route('postingan')->with('success', 'Foto'. $request->judul .' berhasil di Upload');
+            return redirect()->route('postingan')->with('success', 'Foto' . $request->judul . ' berhasil di Upload');
         }
     }
 
@@ -177,9 +189,10 @@ class FotoController extends Controller
         return redirect()->route('postingan')->with('success', 'Foto berhasil di Hapus');
     }
 
-    public function download($foto){
-        if (Storage::exists('public/assets/image/' .$foto)) {
-            return Storage::download('public/assets/image/'.$foto);
+    public function download($foto)
+    {
+        if (Storage::exists('public/assets/image/' . $foto)) {
+            return Storage::download('public/assets/image/' . $foto);
         }
     }
 }

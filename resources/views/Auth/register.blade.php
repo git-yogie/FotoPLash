@@ -1,70 +1,59 @@
 @include('template.header')
 <div class="container">
-<div class="text-center mb-5">
-    <h3>Daftar FotoPlash</h3>
-</div>
-    <div class="card">
-        <div class="card-header">
-            Daftar
+
+    <div class="card m-auto p-3 mt-3" style="width: 350px">
+        <div class="text-center">
+            <img src="{{ asset('assets/fs/full.png') }}" style="width:90px;" alt="">
+            <h5 class=" fw-bold text-mute text-center" style="color: #95a5a6 ;">Buat akun untuk mulai berbagi Foto anda.
+            </h5>
         </div>
         <div class="card-body">
-            <form action="{{ route('registerProcess') }}" method="POST" class="row g-3 needs-validation" novalidate>
+            <hr>
+            <form action="{{ route('registerProcess') }}" method="POST" class="needs-validation" novalidate>
                 @csrf
-                <div class="col-md-6">
-                    <label for="validationCustom01" class="form-label">Nama</label>
-                    <input type="text" class="form-control @error('nama')
-                        is-invalid
-                    @enderror" name="nama" value="{{ old('nama') }}" id="validationCustom01" required>
-                    @error('nama')
+                <div class="form-floating mb-3">
+                    <input type="email" value="{{ old('email') }}" name="email"
+                        class="form-control  @error('email') is-invalid @enderror" id="floatingInput"
+                        placeholder="name@example.com">
+                    <label for="floatingInput">Email</label>
+                    <div class="invalid-feedback">
+                        {{ $errors->first('email') }}
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" name="nama" value="{{ old('nama') }}"
+                        class="form-control  @error('nama') is-invalid @enderror" id="floatingInput"
+                        placeholder="name@example.com">
+                    <label for="floatingInput">Nama lengkap</label>
                     <div class="invalid-feedback">
                         {{ $errors->first('nama') }}
                     </div>
-                    @enderror
-
                 </div>
-                <div class="col-md-6">
-                    <label for="validationCustomUsername" class="form-label">Email</label>
-                    {{-- <div class="input-group has-validation"> --}}
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" value="{{ old('email') }}" class="form-control @error('email')
-                        is-invalid
-                    @enderror" name="email" id="validationCustomUsername"
-                            aria-describedby="inputGroupPrepend" required>
-                            @error('email')
-                            <div class="invalid-feedback">
-                                {{ $errors->first('email') }}
-                            </div>
-                            @enderror
+                <div class="form-floating mb-3">
+                    <input type="text" name="username" value="{{ old('username') }}"
+                        class="form-control @error('username') is-invalid @enderror" id="floatingInput"
+                        placeholder="Username">
+                    <label for="floatingInput">Nama pengguna</label>
+                    <div class="invalid-feedback">
+                        {{ $errors->first('username') }}
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <label for="validationCustom03"  class="form-label">Password</label>
-                    <input type="password"  class="form-control  @error('password')
-                    is-invalid
-                @enderror" name="password" id="validationCustom03" required>
-                    @error('password')
+                <div class="form-floating mb-3">
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+                        id="floatingInput" placeholder="Sandi">
+                    <label for="floatingInput">Sandi</label>
                     <div class="invalid-feedback">
                         {{ $errors->first('password') }}
                     </div>
-                    @enderror
                 </div>
-                <div class="col-md-6">
-                    <label for="validationCustom05" class="form-label">Phone</label>
-                    <input type="number" value="{{ old('phone') }}" class="form-control  @error('phone')
-                    is-invalid
-                @enderror" name="phone" id="validationCustom05" required>
-                    @error('phone')
-                    <div class="invalid-feedback">
-                        {{ $errors->first('phone') }}
-                    </div>
-                    @enderror
-                </div>
-                <div class="col-12 ">
-                    <button class="btn btn-primary" type="submit">Daftar</button>
+
+                <div class="d-grid gap-1 px-2">
+                    <div class="text-mute text-center mb-3" style="font-size:12px; ">Dengan mendaftar berarti
+                        anda<strong> menyetujui</strong> segala ketentuan dari FotoPlash</div>
+                    <button class="btn btn-primary btn-sm fw-bold" type="submit">Daftar</button>
                 </div>
             </form>
         </div>
     </div>
 
-</div>
-@include('template.footer')
+    @include('template.footer')

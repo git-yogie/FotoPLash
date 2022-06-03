@@ -17,15 +17,24 @@ Route::get('/daftar', function () {
 
 // Foto Routes
 Route::get('/foto',[FotoController::class, 'show'])->name('fotoShow');
-Route::get('/foto/create',[FotoController::class, 'create'])->name('fotoCreate');
-Route::post('/foto/store',[FotoController::class, 'store'])->name('fotoStore');
+Route::get('/foto/create',[FotoController::class, 'create'])->name('fotoCreate')->middleware('auth');
+Route::post('/foto/store',[FotoController::class, 'store'])->name('fotoStore')->middleware('auth');
 Route::get('/foto/show/{id}',[FotoController::class, 'show'])->name('fotoShow');
 Route::get('/foto/edit/{id}',[FotoController::class, 'edit'])->name('fotoEdit');
-Route::get('/foto/delete/{id}',[FotoController::class, 'destroy'])->name('destroy');
-Route::post('/foto/update/{id}',[FotoController::class, 'update'])->name('fotoUpdate');
+Route::get('/foto/delete/{id}',[FotoController::class, 'destroy'])->name('destroy')->middleware('auth');
+Route::post('/foto/update/{id}',[FotoController::class, 'update'])->name('fotoUpdate')->middleware('auth');
 Route::get('/foto/download/{foto}',[FotoController::class, 'download'])->name('download');
 
+Route::resource('/foto', FotoController::class);
+
 // Auth Routes
+
 Route::post('/daftarProses',[SignInController::class,'signUp'])->name('registerProcess');
 Route::post('/loginProses',[SignInController::class,'signIn'])->name('signIn');
-Route::get('/signOut',[SignInController::class,'signOut'])->name('signOut');
+Route::get('/signOut',[SignInController::class,'signOut'])->name('signOut')->middleware('auth');
+Route::get('/profile',[SignInController::class,'profile'])->name('profile')->middleware('auth');
+Route::get('/profile/setting',[SignInController::class,'setting'])->name('setting')->middleware('auth');
+Route::post('/profile/picture/upload',[SignInController::class,'uploadPicture'])->name('userpicture')->middleware('auth');
+Route::post('/profile/Bio/update',[SignInController::class,'BioUpdate'])->name('bio_update')->middleware('auth');
+Route::post('/profile/update',[SignInController::class,'UpdateUser'])->name('profile.update')->middleware('auth');
+Route::post('/profile/password/update',[SignInController::class,'UpdatePassword'])->name('password.update')->middleware('auth');

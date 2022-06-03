@@ -1,9 +1,9 @@
-<div class="modal modal-signin fade " tabindex="-1" role="dialog" id="modalSignin">
+<div class="modal modal-signin fade " tabindex="-1" role="dialog"  id="modalSignin">
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-4 shadow">
             <div class="modal-header p-5 pb-4 border-bottom-0">
                 <!-- <h5 class="modal-title">Modal title</h5> -->
-                <h2 class="fw-bold mb-0">Login</h2>
+                <h2 class="fw-bold mb-0">  <img src="{{ asset('assets/fs/full.png') }}" style="width:90px;" alt="">FotoPlash</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -14,6 +14,9 @@
                         {{$message}}
                     </div>
                 @endif
+                <div class="text-center">
+
+                </div>
                 <form action="{{ route('signIn') }}" method="POST" class="">
                     @csrf
                     <div class="form-floating mb-3">
@@ -24,9 +27,9 @@
                     <div class="form-floating mb-3">
                         <input type="password" name="password" class="form-control rounded-3" id="floatingPassword"
                             placeholder="Password">
-                        <label for="floatingPassword">Password</label>
+                        <label for="floatingPassword">Sandi</label>
                     </div>
-                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Sign up</button>
+                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Masuk</button>
                 </form>
             </div>
         </div>

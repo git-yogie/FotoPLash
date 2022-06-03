@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 body {
-    background-color: #e0e0e0;
+    background-color: #ffff;
+    font-family: 'Nunito', sans-serif;
 }
 
 .container {
@@ -28,6 +30,26 @@ img {
 
 img.bd {
     border-radius: 10px;
+}
+
+.dropdown-cls {
+    translate: translateX(-200px);
+}
+
+.namaste {
+    width: 200px;
+    height: 200px;
+    margin: 10px auto;
+    background-color: #9b59b6;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.namaste h2 {
+    margin: 0px auto;
 }
 
 @media only screen and (min-width: 480px) and (max-width: 727px) {
