@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\like;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -74,7 +75,7 @@ class FotoController extends Controller
                 $db->dimensi = $size[0] . ' x ' . $size[1];
                 $db->ukuran = filesize(Storage::path('public/assets/image/' . $fotoName));
                 $db->save();
-                return redirect()->route('postingan')->with('success', 'Foto berhasil di Upload');
+                return redirect()->route('profile')->with('success', 'Foto berhasil di Upload');
             } else {
                 return redirect()->route('fotoCreate')->with('error', 'Foto gagal di Upload');
             }
@@ -97,6 +98,7 @@ class FotoController extends Controller
         } else {
             $title = 'home';
         }
+        $FotoLike = like::where('foto_id',$foto->id)->where('user_id',Auth::user()->id)->get();
         $data = [
             'id' => $foto->id,
             'title' => $title,
@@ -107,10 +109,12 @@ class FotoController extends Controller
             'ukuran' => round(intval($foto->ukuran) / 1024 / 1024, 4) . 'MB',
             'user_id' => $foto->user_id,
             'author' => User::find($foto->user_id)->name,
-            'created' => $foto->created_at,
+            'created' => date("d/m/y",strtotime($foto->created_at)),
             'diff' => $foto->created_at->diffForHumans(),
+            'liked'=> $FotoLike->count()  == 1 ? $FotoLike->first()->id : false,
 
         ];
+
 
         return view('post.detail', compact('data'));
     }

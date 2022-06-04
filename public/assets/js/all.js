@@ -49,3 +49,20 @@ $("#foto").change(function() {
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+function deleteP(deleteUrl) {
+    swal({
+            title: "Apakah anda yakin?",
+            text: "Data yang dihapus tidak dapat dikembalikan!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                window.location = deleteUrl
+            } else {
+                swal("", "Pilihan yang tepat!", "info");
+            }
+        });
+}

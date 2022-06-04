@@ -16,7 +16,7 @@
                 <a href="{{ route('home') }}" class="text-decoration-none text-dark  mx-2">
                     <h2><i class="bi bi-house-door{{ $data['title'] == 'home' ? '-fill' : '' }}"></i></h2>
                 </a>
-                <a href="{{ route('fotoCreate') }}" class="text-decoration-none text-dark  mx-2">
+                <a href="{{ '/foto/create' }}" class="text-decoration-none text-dark  mx-2">
                     <h2><i class="bi bi-plus-square{{ $data['title'] == 'postingan' ? '-fill' : '' }}"></i></h2>
                 </a>
                 <div class="dropdown">
@@ -38,12 +38,12 @@
                                 Profile
                             </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a class="dropdown-item d-flex gap-2 align-items-center" href="#">
                                 <i class="bi bi-bookmark"></i>
                                 Di simpan
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
                             <a class="dropdown-item d-flex gap-2 align-items-center" href="{{ route('setting') }}">
                                 <i class="bi bi-gear-wide-connected"></i>
@@ -51,7 +51,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex gap-2 align-items-center" href="#">
+                            <a class="dropdown-item d-flex gap-2 align-items-center" href="{{ route('UserLikeList') }}">
                                 <i class="bi bi-heart"></i>
                                 Disukai
                             </a>

@@ -49,4 +49,5 @@ class HomeController extends Controller
             return view('home.postingan', compact('data'));
         }
     }
+
 }

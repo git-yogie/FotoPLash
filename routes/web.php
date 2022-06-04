@@ -3,12 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FotoController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\SignInController;
 
-Route::get('/', function () {
-    return redirect()->route('home');
-});
+Route::get('/',[HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/postingan', [HomeController::class, 'postingan'])->name('postingan');
 Route::get('/daftar', function () {
@@ -16,7 +14,7 @@ Route::get('/daftar', function () {
 })->name('register');
 
 // Foto Routes
-Route::get('/foto',[FotoController::class, 'show'])->name('fotoShow');
+// Route::get('/foto',[FotoController::class, 'show'])->name('fotoShow');
 Route::get('/foto/create',[FotoController::class, 'create'])->name('fotoCreate')->middleware('auth');
 Route::post('/foto/store',[FotoController::class, 'store'])->name('fotoStore')->middleware('auth');
 Route::get('/foto/show/{id}',[FotoController::class, 'show'])->name('fotoShow');
@@ -25,10 +23,14 @@ Route::get('/foto/delete/{id}',[FotoController::class, 'destroy'])->name('destro
 Route::post('/foto/update/{id}',[FotoController::class, 'update'])->name('fotoUpdate')->middleware('auth');
 Route::get('/foto/download/{foto}',[FotoController::class, 'download'])->name('download');
 
-Route::resource('/foto', FotoController::class);
+// like foto route.
+Route::get('/foto/like/{id}',[LikeController::class, 'Like'])->name('Like')->middleware('auth');
+Route::get('/foto/dislike/{id}',[LikeController::class, 'DisLike'])->name('DisLike')->middleware('auth');
+Route::get('/foto/disukai',[LikeController::class, 'UserLikeList'])->name('UserLikeList')->middleware('auth');
+
+
 
 // Auth Routes
-
 Route::post('/daftarProses',[SignInController::class,'signUp'])->name('registerProcess');
 Route::post('/loginProses',[SignInController::class,'signIn'])->name('signIn');
 Route::get('/signOut',[SignInController::class,'signOut'])->name('signOut')->middleware('auth');

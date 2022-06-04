@@ -21,7 +21,7 @@
                                 @enderror" value="{{ isset($foto) ? $foto->judul : '' }}" name="judul">
                                 <label for="floatingInput">Judul</label>
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('foto') }}
+                                    {{ $errors->first('judul') }}
                                 </div>
                               </div>
                         </div>
