@@ -27,7 +27,11 @@
                         </tr>
                         <tr>
                             <td class='text-muted'>Author </td>
-                            <td>: {{ $data['author'] }}</td>
+                            <td>: <a href="{{ route('author',$data['author_username']) }}">{{ $data['author'] }}</a></td>
+                        </tr>
+                        <tr>
+                            <td class='text-muted'>Di unduh  </td>
+                            <td>: {{ $data['hit'] }} kali</td>
                         </tr>
                         <tr>
                             <td class='text-muted'>Tanggal Upload </td>

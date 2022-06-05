@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Foto;
+use App\Models\like;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -67,9 +68,16 @@ class SignInController extends Controller
             [
                 'title' => 'Profile',
                 'form_type' => 'create',
+                'search_route'=>'profile',
                 'search' => '',
                 'postcount'=>Foto::where('user_id',Auth::user()->id)->count(),
+                'foto_download'=> 0,
+                'foto_like'=> like::where('user_id',Auth::user()->id)->count(),
             ];
+        $foto = Foto::where('user_id',Auth::user()->id)->get();
+        foreach ($foto as $key) {
+            $data['foto_download'] = $data['foto_download'] + $key->hit;
+        }
         if (Auth::check()) {
             if ($request->search) {
                 $data['search'] = $request->search;
@@ -119,8 +127,14 @@ class SignInController extends Controller
 
     public function UpdateUser(Request $request)
     {
+        // dd($request->all());
         $user = User::find(Auth::user()->id);
-        $user->update($request->all());
+        $data = [
+            'name'=>$request->nama,
+            'email'=>$request->email,
+            'username'=>$request->username,
+        ];
+        $user->update($data);
         return redirect()->route('profile')->with('success', 'Profile berhasil diperbaharui');
     }
 

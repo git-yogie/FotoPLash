@@ -9,6 +9,8 @@ use App\Http\Controllers\SignInController;
 Route::get('/',[HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/postingan', [HomeController::class, 'postingan'])->name('postingan');
+Route::get('/user/{username}', [HomeController::class, 'author'])->name('author');
+
 Route::get('/daftar', function () {
     return view('Auth.register');
 })->name('register');
@@ -18,10 +20,11 @@ Route::get('/daftar', function () {
 Route::get('/foto/create',[FotoController::class, 'create'])->name('fotoCreate')->middleware('auth');
 Route::post('/foto/store',[FotoController::class, 'store'])->name('fotoStore')->middleware('auth');
 Route::get('/foto/show/{id}',[FotoController::class, 'show'])->name('fotoShow');
-Route::get('/foto/edit/{id}',[FotoController::class, 'edit'])->name('fotoEdit');
+Route::get('/foto/edit/{id}',[FotoController::class, 'edit'])->name('fotoEdit')->middleware('auth');
 Route::get('/foto/delete/{id}',[FotoController::class, 'destroy'])->name('destroy')->middleware('auth');
 Route::post('/foto/update/{id}',[FotoController::class, 'update'])->name('fotoUpdate')->middleware('auth');
 Route::get('/foto/download/{foto}',[FotoController::class, 'download'])->name('download');
+
 
 // like foto route.
 Route::get('/foto/like/{id}',[LikeController::class, 'Like'])->name('Like')->middleware('auth');

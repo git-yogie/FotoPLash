@@ -1,7 +1,7 @@
 @include('Auth.login')
 <nav class="navbar bg-light sticky-bottom">
     <div class="container">
-        <a href="/"
+        <a href="{{ route('home') }}"
             class="d-flex align-items-center justify-content-start col-md-6 mb-md-0 text-dark text-decoration-none">
             <img src="{{ asset('assets/fs/sm.png') }}" class="" style="width: 32px;" alt="" srcset="">
             <h2 class="pl-2"> FotoPlash</h2>
@@ -20,7 +20,6 @@
                     <h2><i class="bi bi-plus-square{{ $data['title'] == 'postingan' ? '-fill' : '' }}"></i></h2>
                 </a>
                 <div class="dropdown">
-
                     @if (Auth::user()->userpicture == null)
                         <img src="{{ asset('avatar-1.png') }}" alt="mdo" style="width: 35px;"
                             class="rounded-circle dropdown-toggle" type="button" id="dropdownMenuButton1"

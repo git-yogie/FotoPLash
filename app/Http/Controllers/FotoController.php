@@ -51,11 +51,12 @@ class FotoController extends Controller
                 'judul' => 'required',
                 'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             ],
-            ['judul.required' => 'Judul tidak boleh kosong.',
-            'foto.required' => 'Foto tidak boleh kosong.',
-            'foto.image' => 'Foto harus berupa gambar.',
-            'foto.mimes' => 'Extensi yang diterima jpeg, png, dan jpg.',
-            'foto.max' => 'Foto tidak boleh lebih dari 2MB.',
+            [
+                'judul.required' => 'Judul tidak boleh kosong.',
+                'foto.required' => 'Foto tidak boleh kosong.',
+                'foto.image' => 'Foto harus berupa gambar.',
+                'foto.mimes' => 'Extensi yang diterima jpeg, png, dan jpg.',
+                'foto.max' => 'Foto tidak boleh lebih dari 2MB.',
             ]
         );
         $fotoName = Str::random(20) . '.' . $request->file('foto')->getClientOriginalExtension();
@@ -98,7 +99,12 @@ class FotoController extends Controller
         } else {
             $title = 'home';
         }
-        $FotoLike = like::where('foto_id',$foto->id)->where('user_id',Auth::user()->id)->get();
+        if (isset(Auth::user()->id)) {
+            $FotoLike = like::where('foto_id', $foto->id)->where('user_id', Auth::user()->id)->get();
+            $like = $FotoLike->count()  == 1 ? $FotoLike->first()->id : false;
+        } else {
+            $like = false;
+        }
         $data = [
             'id' => $foto->id,
             'title' => $title,
@@ -109,14 +115,35 @@ class FotoController extends Controller
             'ukuran' => round(intval($foto->ukuran) / 1024 / 1024, 4) . 'MB',
             'user_id' => $foto->user_id,
             'author' => User::find($foto->user_id)->name,
-            'created' => date("d/m/y",strtotime($foto->created_at)),
+            'author_username'=> User::find($foto->user_id)->username,
+            'created' => date("d/m/y", strtotime($foto->created_at)),
             'diff' => $foto->created_at->diffForHumans(),
-            'liked'=> $FotoLike->count()  == 1 ? $FotoLike->first()->id : false,
+            'hit'=> $foto->hit,
+            'liked' => $like,
 
         ];
 
 
         return view('post.detail', compact('data'));
+    }
+
+    public function getPhotoId($id)
+    {
+        $foto = Foto::find($id);
+        $data = [
+            'id' => $foto->id,
+            'title' => 'home',
+            'judul' => $foto->judul,
+            'deskripsi' => $foto->deskripsi,
+            'foto' => $foto->foto,
+            'dimensi' => $foto->dimensi,
+            'ukuran' => round(intval($foto->ukuran) / 1024 / 1024, 4) . 'MB',
+            'user_id' => $foto->user_id,
+            'author' => User::find($foto->user_id)->name,
+            'created' => date("d/m/y", strtotime($foto->created_at)),
+            'diff' => $foto->created_at->diffForHumans(),
+        ];
+        return $data;
     }
 
     /**
@@ -195,7 +222,9 @@ class FotoController extends Controller
 
     public function download($foto)
     {
+
         if (Storage::exists('public/assets/image/' . $foto)) {
+           Foto::where('foto', $foto)->increment('hit');
             return Storage::download('public/assets/image/' . $foto);
         }
     }

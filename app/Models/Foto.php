@@ -9,4 +9,5 @@ class Foto extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
 }

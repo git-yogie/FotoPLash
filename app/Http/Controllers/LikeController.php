@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\like;
+use App\Models\Foto;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -28,8 +29,19 @@ class LikeController extends Controller
     }
 
     public function UserLikeList(){
+        $data =
+        [
+            'title' => 'Disukai',
+            'form_type' => 'create',
+            'search' => '',
+        ];
         $like = like::where('user_id',Auth::user()->id)->get();
-        return view('post.liked',compact('like'));
+        $foto = [];
+        foreach($like as $l){
+            $foto[] = Foto::find($l->foto_id);
+        }
+
+        return view('post.liked',compact('foto','data'));
     }
 
 
